@@ -30,12 +30,19 @@
 
     .game {
         background: black;
+        width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+
         /* flex-direction: column; */
-        margin-top: 40px;
-        width: 100%;
+        /* margin-top: 40px; */
+    }
+
+    canvas {
+        width: 700px;
+        height: 700px;
     }
 
     .controls__mobile {
@@ -440,7 +447,7 @@
     <!-- <div class="leaderwall">Таблица рекордов</div> -->
    
     <div class="div__canvas">
-        <canvas width="400" height="400" id="game"></canvas>
+        <canvas width="500" height="500" id="game"></canvas>
     </div>
     
 
@@ -477,7 +484,7 @@
         
         var canvas = document.getElementById('game');
         var context = canvas.getContext('2d');
-        var grid = 16;
+        var grid = 20;
         var count = 0;
         var interval = null; // таймер
         var currentscore = 0; // текущий счет
