@@ -63,10 +63,16 @@
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
 
+
     .up {
+        display: flex;
         background-color: blue;
         grid-area: up;
         opacity:inherit;
+        color: white;
+        font-size: 50px;
+        align-items: center;
+        justify-content: center;
     }
 
     .up:hover {
@@ -77,6 +83,11 @@
         background-color: rgb(18, 194, 71);
         grid-area: lt;
         opacity:inherit;
+        display: flex;
+        color: white;
+        font-size: 50px;
+        align-items: center;
+        justify-content: center;
     }
 
     .left:hover {
@@ -87,6 +98,11 @@
         background-color: rgb(184, 78, 17);
         grid-area: rt;
         opacity:inherit;
+        display: flex;
+        color: white;
+        font-size: 50px;
+        align-items: center;
+        justify-content: center;
     }
 
     .right:hover {
@@ -97,6 +113,11 @@
         background-color: rgb(194, 11, 194);
         grid-area: dn;
         opacity:inherit;
+        display: flex;
+        color: white;
+        font-size: 50px;
+        align-items: center;
+        justify-content: center;
     }
 
     .down:hover {
@@ -373,13 +394,21 @@
 <body>
     
     <div class="controls__mobile">
-        <div class="up"></div>
+        <div class="up">
+            <span>UP</span>
+        </div>
         <!-- <div class="up"></div> -->
-        <div class="left"></div>
+        <div class="left">
+            <span>LEFT</span>
+        </div>
         <!-- <div class="left"></div> -->
-        <div class="right"></div>
+        <div class="right">
+            <span>RIGHT</span>
+        </div>
         <!-- <div class="right"></div> -->
-        <div class="down"></div>
+        <div class="down">
+            <span>DOWN</span>
+        </div>
         <!-- <div class="down"></div> -->
     </div>
     <!-- <div class="border">
