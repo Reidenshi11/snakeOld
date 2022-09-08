@@ -38,8 +38,9 @@
     }
 
     .controls__mobile {
-        position: fixed;
-        opacity: 0.5;
+        position: absolute;
+        z-index: 5;
+        opacity: 0.3;
         height: 100%;
         width: 100%;
         background-color: rgb(25, 215, 221);
@@ -57,21 +58,41 @@
     .up {
         background-color: blue;
         grid-area: up;
+        opacity:inherit;
+    }
+
+    .up:hover {
+        filter: brightness(10%);
     }
 
     .left {
         background-color: rgb(18, 194, 71);
         grid-area: lt;
+        opacity:inherit;
+    }
+
+    .left:hover {
+        filter: brightness(10%);
     }
 
     .right {
         background-color: rgb(184, 78, 17);
         grid-area: rt;
+        opacity:inherit;
+    }
+
+    .right:hover {
+        filter: brightness(10%);
     }
 
     .down {
         background-color: rgb(194, 11, 194);
         grid-area: dn;
+        opacity:inherit;
+    }
+
+    .down:hover {
+        filter: brightness(10%);
     }
 
     .score {
@@ -401,25 +422,24 @@
 
     <div class="game">
 
-    <div class="leaderwall">Таблица рекордов</div>
+    <!-- <div class="leaderwall">Таблица рекордов</div> -->
    
     <div class="div__canvas">
-        <canvas width="400" height="400" id="game">
-            <div class="controls__mobile">
-                <div class="up"></div>
-                <div class="up"></div>
-                <div class="left"></div>
-                <div class="left"></div>
-                <div class="right"></div>
-                <div class="right"></div>
-                <div class="down"></div>
-                <div class="down"></div>
-            </div>
-        </canvas>
+        <canvas width="400" height="400" id="game"></canvas>
     </div>
     
+    <div class="controls__mobile">
+        <div class="up"></div>
+        <div class="up"></div>
+        <div class="left"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="right"></div>
+        <div class="down"></div>
+        <div class="down"></div>
+    </div>
 
-    <div class="controls">Управление</div>
+    <!-- <div class="controls">Управление</div> -->
 
     <div class="controls__mobile">
         <div class="up"></div>
@@ -433,6 +453,29 @@
     </div>
     
     <script>
+        const contrlUp = document.querySelectorAll('.up');
+        const contrlLeft = document.querySelectorAll('.left');
+        const contrlRight = document.querySelectorAll('.right');
+        const contrlDown = document.querySelectorAll('.down');
+        const contrlMobile = document.querySelectorAll('.controls__mobile');
+        
+        console.dir(contrlMobile);
+
+        contrlRight.forEach(button => {
+        button.addEventListener('click', function(){
+        console.log("вправо");
+        })
+        })
+
+        // contrlRight.addEventListener('click', () =>{
+        //     console.log('нажато вправо');
+        // })
+
+
+
+    
+        
+        
         var canvas = document.getElementById('game');
         var context = canvas.getContext('2d');
         var grid = 16;
@@ -452,6 +495,8 @@
         //     start();
         // }
         
+
+
         //Часы
         
         window.onload = function f_start() { // Запускаем таймер
@@ -631,12 +676,43 @@
             else if (e.which === 83 && snake.dy === 0) {
                 snake.dy = grid;
                 snake.dx = 0;
-            }
-            
+            } 
         });
         
+        contrlRight.forEach(button => {
+            button.addEventListener('click', () => {
+                if (snake.dx === 0) {
+                    snake.dx = grid;
+                    snake.dy = 0;
+                }
+            })
+        })
+        contrlLeft.forEach(button => {
+            button.addEventListener('click', () => {
+                if (snake.dx === 0) {
+                    snake.dx = -grid;
+                    snake.dy = 0;
+                }
+            })
+        })
+        contrlUp.forEach(button => {
+            button.addEventListener('click', () => {
+                if (snake.dy === 0) {
+                    snake.dy = -grid;
+                    snake.dx = 0;
+                }
+            })
+        })
+        contrlDown.forEach(button => {
+            button.addEventListener('click', () => {
+                if (snake.dy === 0) {
+                    snake.dy = grid;
+                    snake.dx = 0;
+                }
+            })
+        })
         
-        
+
 
         requestAnimationFrame(loop);
 
