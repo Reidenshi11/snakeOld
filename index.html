@@ -576,7 +576,7 @@
             maxCells: 2
         };
 
-        currentscore = snake.maxCells;
+        // currentscore = snake.maxCells;
         // document.querySelector(".score").innerHTML = currentscore;
         // document.querySelector(".user").innerHTML = currentName;
         // document.querySelector(".clock").innerHTML = clock1;
@@ -629,19 +629,19 @@
                 if (cell.x === apple.x && cell.y === apple.y) {
                     // context.fillStyle = 'blue';
                     snake.maxCells++;
-                    currentscore = snake.maxCells;
+                    // currentscore = snake.maxCells;
                     
-                    document.querySelector(".score").innerHTML = currentscore;
+                    // document.querySelector(".score").innerHTML = currentscore;
                     console.log(highscore);
                     console.log(currentscore);
 
-                    if (highscore <= currentscore) {
-                        highscore = currentscore;
-                        currentNameRecord = currentName
-                    };
+                    // if (highscore <= currentscore) {
+                    //     highscore = currentscore;
+                    //     currentNameRecord = currentName
+                    // };
 
-                    document.querySelector(".highscore").innerHTML = highscore;
-                    document.querySelector(".user_record").innerHTML = currentNameRecord;
+                    // document.querySelector(".highscore").innerHTML = highscore;
+                    // document.querySelector(".user_record").innerHTML = currentNameRecord;
                     apple.x = getRandomInt(0, 25) * grid;
                     apple.y = getRandomInt(0, 25) * grid;
                     
