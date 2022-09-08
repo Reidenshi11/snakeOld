@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Snake</title>
+    <style>
+
+    * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      } 
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+    body {
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+        /* height: 100vh; */
+        background: #050801;
+        font-family: 'Raleway' sans-serif;
+        font-weight: bold;
+    }
+
+    .game {
+        background: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* flex-direction: column; */
+        margin-top: 40px;
+        width: 100%;
+    }
+
+    .controls__mobile {
+        position: fixed;
+        opacity: 0.5;
+        height: 100%;
+        width: 100%;
+        background-color: rgb(25, 215, 221);
+        display: grid;
+        grid-template-areas: 
+            "up up"
+            "up up"
+            "lt rt"
+            "lt rt"
+            "lt rt"
+            "dn dn"
+            "dn dn";
+    }
+
+    .up {
+        background-color: blue;
+        grid-area: up;
+    }
+
+    .left {
+        background-color: rgb(18, 194, 71);
+        grid-area: lt;
+    }
+
+    .right {
+        background-color: rgb(184, 78, 17);
+        grid-area: rt;
+    }
+
+    .down {
+        background-color: rgb(194, 11, 194);
+        grid-area: dn;
+    }
+
+    .score {
+        background: black;
+        min-width: 40px;
+        width: auto;
+        height: 20px;
+        text-align: center;
+        margin-bottom: 25px;
+        /* justify-content: center; */
+        color: white;
+        overflow: hidden;
+        border: 1px solid white hidden;
+        margin: 0 5px;
+    }
+
+    .user {
+        background: black;
+        min-width: 40px;
+        width: auto;
+        max-width: max-content;
+        height: 20px;
+        text-align: center;
+        margin-bottom: 25px;
+        /* justify-content: center; */
+        color: white;
+        overflow: hidden;
+        border: 1px solid white hidden;
+        margin: 0 5px;
+    }
+
+    .border_solid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column-reverse;
+        background: black;
+        min-width: 30px;
+        width: auto;
+        height: 24px;
+        /* margin-bottom: 25px; */
+        /* justify-content: center; */
+        text-align: center;
+        overflow: hidden;
+        color: white;
+        border: 1px solid white;
+        margin: 0 5px;
+        /* top: 5px; */
+    }
+
+    .user_record{
+        background: black;
+        min-width: 100px;
+        width: auto;
+        height: 20px;
+        margin-bottom: 25px;
+        /* justify-content: center; */
+        text-align: center;
+        overflow: auto;
+        color: white;
+        border: 1px solid white hidden;
+        margin: 0 5px;
+    }
+
+    .clock {
+        display: flex;
+        background: black;
+        min-width: 80px;
+        width: 100%;
+        height: 20px;
+        font-size: 12px;
+        /* position:fixed; */
+        margin-bottom: 25px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+        color: white;
+        border: 1px solid white hidden;
+        margin: 0 5px;
+    }
+
+    .score_red {
+        color: red;
+    }
+
+    .highscore {
+        background: black;
+        min-width: 40px;
+        width: auto;
+        height: 20px;
+        text-align: center;
+        margin-bottom: 25px;
+        /* justify-content: center; */
+        color: white;
+        overflow: hidden;
+        border: 1px solid white hidden;
+        margin: 0 5px;
+    }
+    .border {
+        border: 1px solid rgb(248, 248, 248);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+
+    }
+
+    .text   {
+        color: white;
+        font-size: 14px;
+        text-decoration: underline;
+    }
+
+    canvas {
+        border: 1px solid white;
+        width: 600px;
+        height: 600px;
+    }
+
+    .leaderwall {
+        border: 1px solid rgb(255, 255, 255);
+        background-color: rgb(73, 68, 68);
+        min-width: 80px;
+        min-height: 600px;
+        width: 100%;
+        height: auto;
+        text-align: center;
+    }
+
+    .controls {
+        border: 1px solid rgb(255, 255, 255);
+        background-color: rgb(80, 75, 75);
+        min-width: 80px;
+        min-height: 600px;
+        width: 100%;
+        height: auto;
+        text-align: center;
+    }
+
+   
+      .border {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          width: 100%;
+          padding: 25px 0px;
+          margin: 0px 0;
+          color: #03e9f4;
+          text-decoration: none;
+          text-transform: uppercase;
+          transition: 0.5s;
+          letter-spacing: 4px;
+          overflow: hidden;
+          /* margin-right: 50px; */
+      }
+
+      .border_animation {
+          display: inline-block;
+          position: relative;
+          justify-content: center;
+          align-items: center;
+          height: 24px;
+          text-decoration: none;
+          text-transform: uppercase;
+          transition: 0.5s;
+          letter-spacing: 4px;
+          overflow: hidden;
+          /* margin-right: 50px; */
+      }
+
+      /* .border_animation:hover {
+          background: #03e9f4;
+          color: #050801;
+          box-shadow: 0 0 5px #03e9f4,
+                      0 0 15px #03e9f4,
+                      0 0 20px #03e9f4,
+                      0 0 50px #03e9f4;
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+      } */
+
+      /* .border_animationa:nth-child(1){
+          filter: hue-rotate(270deg);
+      } 
+
+       .border_animation:nth-child(2){
+          filter: hue-rotate(110deg);
+      } */
+
+      .border_animation span {
+          position: absolute;
+          display: block;
+      }
+
+      .border_animation span:nth-child(1){
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #03e9f4);
+          animation: animate1 1s linear infinite;
+      }
+      @keyframes animate1{
+          0%{
+              left: -100%;
+          }
+          50%,100%{
+              left: 100%;
+          }
+      }
+
+      .border_animation span:nth-child(2){
+          top: -100%;
+          right: 0;
+          width: 2px;
+          height: 100%;
+          background: linear-gradient(180deg, transparent, #03e9f4);
+          animation: animate2 1s linear infinite;
+          animation-delay: 0.25s;
+      }
+      @keyframes animate2{
+          0%{
+              top: -100%;
+          }
+          50%,100% {
+              top: 100%;
+          }
+      }
+      .border_animation span:nth-child(3) {
+          bottom: 0;
+          right: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(270deg, transparent, #03e9f4);
+          animation: animate3 1s linear infinite;
+          animation-delay: 0.50s;
+      }
+      @keyframes animate3{
+          0%{
+              right: -100%;
+          }
+          50%,100% {
+              right: 100%;
+          }
+      }
+
+      .border_animation span:nth-child(4) {
+          bottom: -100%;
+          left: 0;
+          width: 2px;
+          height: 100%;
+          background: linear-gradient(360deg, transparent, #03e9f4);
+          animation: animate4 1s linear infinite;
+          animation-delay: 0.75s;
+      }
+      @keyframes animate4{
+          0%{
+              bottom: -100%;
+          }
+          50%,100% {
+              bottom: 100%;
+          }
+      } 
+        
+    </style>
+ 
+</head>
+<body>
+    
+    <div class="border">
+        <span class="text">High score:</span>
+             <div id="neon1" class="border_animation">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <div class="highscore"></div>
+             </div>
+
+        <span class="text">User record:</span>
+             <div id="neon2" class="border_animation">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <div class="user_record"></div>
+             </div>
+
+        <span class="text" id="idscore">Score:</span>
+            <div id="neon3" class="border_animation">
+                <a href="#">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <div class="score"></div>
+                </a>
+            </div>
+
+        <span class="text">Current user:</span>
+        <div id="neon4" class="border_animation">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="user"></div>
+        </div>
+
+        <span class="text">Time:</span>
+        <div id="neon5" class="border_animation">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="clock" id="div1"></div>
+        </div>
+
+        <div class="close">
+            <button onclick="closeNeon()">Neon</button>
+        </div>
+
+    
+    </div>
+
+
+    <div class="game">
+
+    <div class="leaderwall">Таблица рекордов</div>
+   
+    <div class="div__canvas">
+        <canvas width="400" height="400" id="game">
+            <div class="controls__mobile">
+                <div class="up"></div>
+                <div class="up"></div>
+                <div class="left"></div>
+                <div class="left"></div>
+                <div class="right"></div>
+                <div class="right"></div>
+                <div class="down"></div>
+                <div class="down"></div>
+            </div>
+        </canvas>
+    </div>
+    
+
+    <div class="controls">Управление</div>
+
+    <div class="controls__mobile">
+        <div class="up"></div>
+        <div class="up"></div>
+        <div class="left"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="right"></div>
+        <div class="down"></div>
+        <div class="down"></div>
+    </div>
+    
+    <script>
+        var canvas = document.getElementById('game');
+        var context = canvas.getContext('2d');
+        var grid = 16;
+        var count = 0;
+        var interval = null; // таймер
+        var currentscore = 0; // текущий счет
+        var flag = false;
+        var currentName = 'mr. Smith'; // = window.prompt("Введите ваше имя", "mr. Smith");
+                        //   alert(`Привет ${currentName}`);
+        var currentNameRecord = null;
+        var isPause = false;
+        var rgb1, rgb2, rgb3;
+        var clock1;
+        var highscore = 0;
+        // window.onload = function () {
+        //     initMes();
+        //     start();
+        // }
+        
+        //Часы
+        
+        window.onload = function f_start() { // Запускаем таймер
+        clock1 = setInterval("f_time();", 1000);
+        }
+        function f_time() { // Считываем текущее время
+            var d = new Date();
+            var msg = (d.getHours()<10) ? "0" : "";
+            msg += d.getHours();
+            msg += (d.getMinutes()<10) ? ":0" : ":";
+            msg += d.getMinutes();
+            msg += (d.getSeconds()<10) ? ":0" : ":";
+            msg += d.getSeconds();
+            document.getElementById("div1").innerHTML = msg;
+        }
+        //
+
+        //
+        function closeNeon() {
+            var element = document.getElementById("neon1");
+            element.classList.remove("border_animation");
+            var element = document.getElementById("neon1");
+            element.classList.add("border_solid");
+            var element = document.getElementById("neon2");
+            element.classList.remove("border_animation");
+            var element = document.getElementById("neon2");
+            element.classList.add("border_solid");
+            var element = document.getElementById("neon3");
+            element.classList.remove("border_animation");
+            var element = document.getElementById("neon3");
+            element.classList.add("border_solid");
+            var element = document.getElementById("neon4");
+            element.classList.remove("border_animation");
+            var element = document.getElementById("neon4");
+            element.classList.add("border_solid");
+            var element = document.getElementById("neon5");
+            element.classList.remove("border_animation")
+            var element = document.getElementById("neon5");
+            element.classList.add("border_solid");
+        };
+        //
+
+        var snake = {
+            x: 160,
+            y: 160,
+            dx: grid,
+            dy: 0,
+            cells: [],
+            maxCells: 2
+        };
+
+        currentscore = snake.maxCells;
+        document.querySelector(".score").innerHTML = currentscore;
+        document.querySelector(".user").innerHTML = currentName;
+        document.querySelector(".clock").innerHTML = clock1;
+        document.querySelector(".highscore").innerHTML = highscore;
+        document.querySelector(".user_record").innerHTML = currentNameRecord;
+
+        // if ($highscore <= $currentscore) {
+        //         currentscore = highscore;  
+        // };
+        
+        var apple = {
+            x: 320,
+            y: 320
+        };
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function loop() {
+            requestAnimationFrame(loop);
+            if (++count < 4) {
+                return;
+            }
+            count = 0;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            snake.x += snake.dx;
+            snake.y += snake.dy;
+            if (snake.x < 0) {
+                snake.x = canvas.width - grid;
+            }
+            else if (snake.x >= canvas.width) {
+                snake.x = 0;
+            }
+            if (snake.y < 0) {
+                snake.y = canvas.height - grid;
+            }
+            else if (snake.y >= canvas.height) {
+                snake.y = 0;
+            }
+            snake.cells.unshift({ x: snake.x, y: snake.y });
+            if (snake.cells.length > snake.maxCells) {
+                snake.cells.pop();
+            }
+            context.fillStyle = 'red';
+            context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+            context.fillStyle = 'rgb(163, 190, 7)';
+            snake.cells.forEach(function (cell, index) {
+                context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+                if (cell.x === apple.x && cell.y === apple.y) {
+                    // context.fillStyle = 'blue';
+                    snake.maxCells++;
+                    currentscore = snake.maxCells;
+                    
+                    document.querySelector(".score").innerHTML = currentscore;
+                    console.log(highscore);
+                    console.log(currentscore);
+
+                    if (highscore <= currentscore) {
+                        highscore = currentscore;
+                        currentNameRecord = currentName
+                    };
+
+                    document.querySelector(".highscore").innerHTML = highscore;
+                    document.querySelector(".user_record").innerHTML = currentNameRecord;
+                    apple.x = getRandomInt(0, 25) * grid;
+                    apple.y = getRandomInt(0, 25) * grid;
+                    
+                   
+                    // document.querySelector(".score").textContent = snake.maxCells;
+                    
+
+                    // if (snake.maxCells > 6) {
+                    //     document.querySelector(".score").classList.add(".score_red");
+                    // }
+             
+                    
+                }
+                context.fillStyle = 'green';
+                // context.fillStyle = 'rgb( rgb1, rgb2, rgb3)';
+                for (var i = index + 1; i < snake.cells.length; i++) {
+                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                        snake.x = 160;
+                        snake.y = 160;
+                        snake.cells = [];
+                        snake.maxCells = 2;
+                        snake.dx = grid;
+                        snake.dy = 0;
+                        apple.x = getRandomInt(0, 25) * grid;
+                        apple.y = getRandomInt(0, 25) * grid;
+                       }
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.which === 37 && snake.dx === 0) {
+                snake.dx = -grid;
+                snake.dy = 0;
+            }
+            else if (e.which === 38 && snake.dy === 0) {
+                snake.dy = -grid;
+                snake.dx = 0;
+            }
+            else if (e.which === 39 && snake.dx === 0) {
+                snake.dx = grid;
+                snake.dy = 0;
+            }
+            else if (e.which === 40 && snake.dy === 0) {
+                snake.dy = grid;
+                snake.dx = 0;
+            }
+            else if (e.which === 65 && snake.dx === 0) {
+                snake.dx = -grid;
+                snake.dy = 0;
+            }
+            else if (e.which === 87 && snake.dy === 0) {
+                snake.dy = -grid;
+                snake.dx = 0;
+            }
+            else if (e.which === 68 && snake.dx === 0) {
+                snake.dx = grid;
+                snake.dy = 0;
+            }
+            else if (e.which === 83 && snake.dy === 0) {
+                snake.dy = grid;
+                snake.dx = 0;
+            }
+            
+        });
+        
+        
+        
+
+        requestAnimationFrame(loop);
+
+    </script>
+   
+    </div>
+    
+</body>
+</html>
