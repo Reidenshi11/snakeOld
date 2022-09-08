@@ -14,6 +14,7 @@
         html,
         body {
             height: 100%;
+            padding: 0;
             margin: 0;
         }
 
@@ -40,12 +41,12 @@
     .controls__mobile {
         position: absolute;
         z-index: 5;
-        opacity: 0.3;
+        opacity: 0.7;
         height: 100%;
         width: 100%;
         background-color: rgb(25, 215, 221);
         display: grid;
-        grid-template-areas: 
+         grid-template-areas: 
             "up up"
             "up up"
             "lt rt"
@@ -53,6 +54,10 @@
             "lt rt"
             "dn dn"
             "dn dn";
+        /* grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: ; */
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
 
     .up {
@@ -364,6 +369,16 @@
 </head>
 <body>
     
+    <div class="controls__mobile">
+        <div class="up"></div>
+        <!-- <div class="up"></div> -->
+        <div class="left"></div>
+        <!-- <div class="left"></div> -->
+        <div class="right"></div>
+        <!-- <div class="right"></div> -->
+        <div class="down"></div>
+        <!-- <div class="down"></div> -->
+    </div>
     <!-- <div class="border">
         <span class="text">High score:</span>
              <div id="neon1" class="border_animation">
@@ -428,44 +443,28 @@
         <canvas width="400" height="400" id="game"></canvas>
     </div>
     
-    <div class="controls__mobile">
-        <div class="up"></div>
-        <div class="up"></div>
-        <div class="left"></div>
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="right"></div>
-        <div class="down"></div>
-        <div class="down"></div>
-    </div>
+
 
     <!-- <div class="controls">Управление</div> -->
-
-    <div class="controls__mobile">
-        <div class="up"></div>
-        <div class="up"></div>
-        <div class="left"></div>
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="right"></div>
-        <div class="down"></div>
-        <div class="down"></div>
-    </div>
     
     <script>
-        const contrlUp = document.querySelectorAll('.up');
-        const contrlLeft = document.querySelectorAll('.left');
-        const contrlRight = document.querySelectorAll('.right');
-        const contrlDown = document.querySelectorAll('.down');
+        const contrlUp = document.querySelector('.up');
+        const contrlLeft = document.querySelector('.left');
+        const contrlRight = document.querySelector('.right');
+        const contrlDown = document.querySelector('.down');
         const contrlMobile = document.querySelectorAll('.controls__mobile');
         
-        console.dir(contrlMobile);
+        // console.dir(contrlMobile);
 
-        contrlRight.forEach(button => {
-        button.addEventListener('click', function(){
-        console.log("вправо");
-        })
-        })
+        // contrlUp.onclick = () => {
+        //     console.log('PUSH');
+        // }
+
+        // contrlRight.forEach(button => {
+        // button.addEventListener('click', function(){
+        // console.log("вправо");
+        // })
+        // })
 
         // contrlRight.addEventListener('click', () =>{
         //     console.log('нажато вправо');
@@ -499,19 +498,19 @@
 
         //Часы
         
-        window.onload = function f_start() { // Запускаем таймер
-        clock1 = setInterval("f_time();", 1000);
-        }
-        function f_time() { // Считываем текущее время
-            var d = new Date();
-            var msg = (d.getHours()<10) ? "0" : "";
-            msg += d.getHours();
-            msg += (d.getMinutes()<10) ? ":0" : ":";
-            msg += d.getMinutes();
-            msg += (d.getSeconds()<10) ? ":0" : ":";
-            msg += d.getSeconds();
-            document.getElementById("div1").innerHTML = msg;
-        }
+        // window.onload = function f_start() { // Запускаем таймер
+        // clock1 = setInterval("f_time();", 1000);
+        // }
+        // function f_time() { // Считываем текущее время
+        //     var d = new Date();
+        //     var msg = (d.getHours()<10) ? "0" : "";
+        //     msg += d.getHours();
+        //     msg += (d.getMinutes()<10) ? ":0" : ":";
+        //     msg += d.getMinutes();
+        //     msg += (d.getSeconds()<10) ? ":0" : ":";
+        //     msg += d.getSeconds();
+        //     document.getElementById("div1").innerHTML = msg;
+        // }
         //
 
         //
@@ -549,11 +548,11 @@
         };
 
         currentscore = snake.maxCells;
-        document.querySelector(".score").innerHTML = currentscore;
-        document.querySelector(".user").innerHTML = currentName;
-        document.querySelector(".clock").innerHTML = clock1;
-        document.querySelector(".highscore").innerHTML = highscore;
-        document.querySelector(".user_record").innerHTML = currentNameRecord;
+        // document.querySelector(".score").innerHTML = currentscore;
+        // document.querySelector(".user").innerHTML = currentName;
+        // document.querySelector(".clock").innerHTML = clock1;
+        // document.querySelector(".highscore").innerHTML = highscore;
+        // document.querySelector(".user_record").innerHTML = currentNameRecord;
 
         // if ($highscore <= $currentscore) {
         //         currentscore = highscore;  
@@ -677,40 +676,34 @@
                 snake.dy = grid;
                 snake.dx = 0;
             } 
+            
         });
         
-        contrlRight.forEach(button => {
-            button.addEventListener('click', () => {
+        contrlRight.onclick = () =>{
                 if (snake.dx === 0) {
                     snake.dx = grid;
                     snake.dy = 0;
-                }
-            })
-        })
-        contrlLeft.forEach(button => {
-            button.addEventListener('click', () => {
+                }}
+
+        contrlLeft.onclick = () => {
                 if (snake.dx === 0) {
                     snake.dx = -grid;
                     snake.dy = 0;
-                }
-            })
-        })
-        contrlUp.forEach(button => {
-            button.addEventListener('click', () => {
+                }}
+
+
+        contrlUp.onclick = () => {
                 if (snake.dy === 0) {
                     snake.dy = -grid;
                     snake.dx = 0;
-                }
-            })
-        })
-        contrlDown.forEach(button => {
-            button.addEventListener('click', () => {
+                }}
+
+
+        contrlDown.onclick = () => {
                 if (snake.dy === 0) {
                     snake.dy = grid;
                     snake.dx = 0;
-                }
-            })
-        })
+                }}
         
 
 
