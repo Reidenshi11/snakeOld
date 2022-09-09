@@ -728,12 +728,19 @@
                 }}
 
 
-        contrlDown.onclick = () => {
-                if (snake.dy === 0) {
+        // contrlDown.onclick = () => {
+        //         if (snake.dy === 0) {
+        //             snake.dy = grid;
+        //             snake.dx = 0;
+        //         }}
+        
+        contrlDown.addEventListener('click', function() {
+            if (snake.dy === 0) {
                     snake.dy = grid;
                     snake.dx = 0;
-                }}
-        
+                }
+                return 
+        })
 
 
         requestAnimationFrame(loop);
